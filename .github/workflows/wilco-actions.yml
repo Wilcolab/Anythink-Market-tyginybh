@@ -20,8 +20,7 @@ jobs:
         with:
           node-version: "16"
 
-      # ADD THIS STEP HERE
-      - name: Lower Docker Min API Version
+      - name: Force Docker API Compatibility
         run: |
           echo '{"min-api-version": "1.40"}' | sudo tee /etc/docker/daemon.json
           sudo systemctl restart docker

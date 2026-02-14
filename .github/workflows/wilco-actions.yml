@@ -5,21 +5,28 @@ on:
 
 jobs:
   wilco:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    runs-on: ubuntu-latest  # Changed from 20.04
+    env:
+      DOCKER_API_VERSION: "1.44"
+      CI: true
     name: Pr checks
 
     steps:
       - name: Check out project
         uses: actions/checkout@v2
-
+      
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16"
 
+      - name: Force Docker API Compatibility
+        run: |
+          echo '{"min-api-version": "1.40"}' | sudo tee /etc/docker/daemon.json
+          sudo systemctl restart docker
+
       - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.6.0
+        uses: supercharge/mongodb-github-action@1.12.0
         with:
           mongodb-version: "4.4"
 

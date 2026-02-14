@@ -10,6 +10,13 @@ jobs:
     name: Pr checks
 
     steps:
+      - name: Upgrade Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-ce docker-ce-cli
+          sudo systemctl restart docker
+          docker version
+
       - name: Check out project
         uses: actions/checkout@v2
 
@@ -17,12 +24,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-
-      - name: Upgrade Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-ce docker-ce-cli
-          sudo systemctl restart docker
 
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.11.0

@@ -5,19 +5,18 @@ on:
 
 jobs:
   wilco:
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
+    runs-on: ubuntu-latest  # Changed from 20.04
+    env:
+      DOCKER_API_VERSION: "1.44"
+      CI: true
     name: Pr checks
 
     steps:
-      - name: Upgrade Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-ce docker-ce-cli
-          sudo systemctl restart docker
-          docker version
-
       - name: Check out project
+        uses: actions/checkout@v2
+      
+      - name: Use Node.js
+        # ... rest of your file ...
         uses: actions/checkout@v2
 
       - name: Use Node.js
